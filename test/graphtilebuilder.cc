@@ -350,14 +350,14 @@ TEST(GraphTileBuilder, TestWriteElevationData) {
 
   bool added = false;
   graphTileBuilder.AddEdgeInfo(0, GraphId(0, 2, 0), GraphId(0, 2, 1), 1234, 555, 0, 120,
-                               std::list<PointLL>{{0, 0}, {1, 1}}, {"einzelweg"}, {"1xyz tunnel"}, 0,
+                               std::list<PointLL>{{0, 0}, {1, 1}}, {"einzelweg"}, {"1xyz tunnel"}, {}, 0,
                                added);
 
   graphTileBuilder.AddEdgeInfo(1, GraphId(0, 2, 1), GraphId(0, 2, 2), 5678, 555, 0, 120,
-                               std::list<PointLL>{{1, 1}, {2, 2}}, {"asdf"}, {"main st"}, 0, added);
+                               std::list<PointLL>{{1, 1}, {2, 2}}, {"asdf"}, {"main st"}, {}, 0, added);
 
   graphTileBuilder.AddEdgeInfo(2, GraphId(0, 2, 2), GraphId(0, 2, 3), 9087, 555, 0, 120,
-                               std::list<PointLL>{{2, 2}, {3, 3}}, {"asdf"}, {"main st"}, 0, added);
+                               std::list<PointLL>{{2, 2}, {3, 3}}, {"asdf"}, {"main st"}, {}, 0, added);
   ASSERT_TRUE(added);
 
   const auto firstString = "one";
