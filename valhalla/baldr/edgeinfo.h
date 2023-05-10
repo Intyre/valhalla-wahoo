@@ -215,7 +215,11 @@ public:
    * Returns a block of encoded elevation samples
    * @return Returns the encoded elevation sample string
    */
+  #if HAS_STRING_VIEW
   std::string_view encoded_elevation_samples() const;
+  #else // !HAS_STRING_VIEW
+  std::string encoded_elevation_samples() const;
+  #endif
 
   /**
    * Gets elevation samples corresponding to the edge shape

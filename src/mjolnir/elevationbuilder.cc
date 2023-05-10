@@ -35,7 +35,7 @@ constexpr double kMinimumInterval = 10.0f;
 
 void add_edge_elevation(uint32_t edgeIndex,
                         GraphTileBuilder& tileBuilder,
-                        const valhalla::skadi::sample* sample);
+                        valhalla::skadi::sample* sample);
 
 /**
  * Adds elevation to a set of tiles. Each thread pulls a tile of the queue
@@ -154,6 +154,7 @@ void add_elevation(const boost::property_tree::ptree& pt,
       directededge.set_max_down_slope(max_down_slope);
 
       if (embed_elevation) {
+          LOG_INFO("ElevationBuilder: embedding elevation data");
           add_edge_elevation(i, tilebuilder, sample.get());
       }
     }
@@ -172,7 +173,7 @@ void add_elevation(const boost::property_tree::ptree& pt,
 
 void add_edge_elevation(uint32_t directedEdgeIndex,
                         GraphTileBuilder& tileBuilder,
-                        const valhalla::skadi::sample* sample) {
+                        valhalla::skadi::sample* sample) {
   const auto& directedEdge = tileBuilder.directededge(directedEdgeIndex);
   const auto edgeInfo = tileBuilder.edgeinfo(&directedEdge);
   auto heights = sample->get_all(edgeInfo.shape());

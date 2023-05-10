@@ -394,6 +394,7 @@ void GraphTile::Initialize(const GraphId& graphid) {
   }
 }
 
+#if HAS_STRING_VIEW
 std::string_view GraphTile::elevationSampleAtIndex(uint32_t directedEdgeIndex) const {
   if (elevation_ptr_ == nullptr) {
     return std::string_view{};
@@ -413,6 +414,27 @@ std::string_view GraphTile::elevationSampleAtIndex(uint32_t directedEdgeIndex) c
 
   return std::string_view{};
 }
+#else // !HAS_STRING_VIEW
+std::string GraphTile::elevationSampleAtIndex(uint32_t directedEdgeIndex) const {
+  if (elevation_ptr_ == nullptr) {
+    return std::string{};
+  }
+
+  if (directedEdgeIndex >= header_->directededgecount()) {
+    throw std::range_error("Invalid directed edge index when looking for elevation samples");
+  }
+
+  auto elevation_ptr = elevation_ptr_;
+  for (auto i = 0; i < header_->directededgecount(); ++i) {
+    if (i == directedEdgeIndex) {
+      return std::string{elevation_ptr, edge_elevation_sample_sizes_[directedEdgeIndex]};
+    }
+    elevation_ptr += edge_elevation_sample_sizes_[i];
+  }
+
+  return std::string{};
+}
+#endif
 
 // For transit tiles we need to save off the pair<tileid,lineid> lookup via
 // onestop_ids.  This will be used for including or excluding transit lines

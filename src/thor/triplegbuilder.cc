@@ -1684,7 +1684,7 @@ void TripLegBuilder::Build(
 
     if (edge_shape.size() == elevation_shape.size()) {
       trip_points.reserve(edge_shape.size());
-      for (auto i = 0; i < edge_shape.size(); ++i) {
+      for (auto i = 0; i < (long unsigned int)edge_shape.size(); ++i) {
         trip_points.emplace_back(edge_shape[i], elevation_shape[i]);
       }
     }

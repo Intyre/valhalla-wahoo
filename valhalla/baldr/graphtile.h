@@ -685,7 +685,11 @@ public:
    * @return String containing encoded elevation samples. Empty if there are no elevation samples.
    * @throws std::range_error if index is out-of-bounds
    */
+  #if HAS_STRING_VIEW
   std::string_view elevationSampleAtIndex(uint32_t directedEdgeIndex) const;
+  #else // !HAS_STRING_VIEW
+  std::string elevationSampleAtIndex(uint32_t directedEdgeIndex) const;
+  #endif
 
   /**
    * Convenience method to get the offset into the text table for the turn lanes

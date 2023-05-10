@@ -325,7 +325,11 @@ TEST(GraphTileBuilder, TestAddElevationSamples) {
   ASSERT_EQ(graphTileBuilder.EdgeElevationSamples().size(), 11);
 
   auto& samples = graphTileBuilder.EdgeElevationSamples();
+  #if HAS_STRING_VIEW
   auto allData = std::string_view{samples.data(), samples.size()};
+  #else // !HAS_STRING_VIEW
+  auto allData = std::string{samples.data(), samples.size()};
+  #endif
   ASSERT_TRUE(allData == "onetwothree");
 
   auto& sizes = graphTileBuilder.EdgeElevationSampleSizes();
@@ -373,7 +377,11 @@ TEST(GraphTileBuilder, TestWriteElevationData) {
   ASSERT_EQ(graphTileBuilder.EdgeElevationSamples().size(), 11);
 
   auto& samples = graphTileBuilder.EdgeElevationSamples();
+  #if HAS_STRING_VIEW
   auto allData = std::string_view{samples.data(), samples.size()};
+  #else // !HAS_STRING_VIEW
+  auto allData = std::string{samples.data(), samples.size()};
+  #endif
   ASSERT_TRUE(allData == "onetwothree");
 
   auto& sizes = graphTileBuilder.EdgeElevationSampleSizes();

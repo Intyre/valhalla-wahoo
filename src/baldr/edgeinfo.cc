@@ -279,6 +279,7 @@ std::string EdgeInfo::encoded_shape() const {
                                    : std::string(encoded_shape_, ei_.encoded_shape_size_);
 }
 
+#if HAS_STRING_VIEW
 std::string_view EdgeInfo::encoded_elevation_samples() const {
   if (elevation_samples_ == nullptr) {
     return std::string_view();
@@ -286,6 +287,15 @@ std::string_view EdgeInfo::encoded_elevation_samples() const {
 
   return std::string_view(elevation_samples_, elevation_samples_size_);
 }
+#else // !HAS_STRING_VIEW
+std::string EdgeInfo::encoded_elevation_samples() const {
+  if (elevation_samples_ == nullptr) {
+    return std::string();
+  }
+
+  return std::string(elevation_samples_, elevation_samples_size_);
+}
+#endif
 
 std::vector<double> EdgeInfo::elevation_samples() const {
   return midgard::decode7Samples(encoded_elevation_samples(), kElevationSampleDecodePrecision);
