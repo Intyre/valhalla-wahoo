@@ -17,3 +17,24 @@ The routing engine will listen on and expose port 8002, and load any tile data f
 ### To build/publish images manually
 * `docker build -f Dockerfile-[build] --tag valhalla/valhalla:[build]-[version_tag] --no-cache --force-rm .`
 * `docker push valhalla/valhalla:[build]-[version_tag]`
+
+## Wahoo build
+* `docker build -f Dockerfile-build --tag valhalla/wahoo:build-3.1.4 docker`
+* `docker build -f Dockerfile-wahoo --tag valhalla/wahoo:run-3.1.4 .`
+
+Set `embed_elevation` to `true` in the `valhalla.json` file to include elevation.
+``` json
+"additional_data": {
+    "embed_elevation": true
+}
+```
+
+### Using with gis-ops image
+To use the `valhalla/wahoo:run-3.1.4` image with gis-ops scripts replace the FROM line in the [Dockerfile](https://github.com/gis-ops/docker-valhalla/blob/master/Dockerfile#L6).
+```
+# old
+FROM ghcr.io/valhalla/valhalla:latest as builder
+
+# change to
+FROM valhalla/wahoo:run-3.1.4 as builder
+```

@@ -56,4 +56,4 @@ env DEBIAN_FRONTEND=noninteractive apt-get install --yes --quiet \
   && rm -rf /var/lib/apt/lists/*
 
 # for boost
-pip install conan
+pip install "conan<2.0.0"
